@@ -68,7 +68,7 @@ class FragmentMain : Fragment() {
         dialog.show()
         mService.getPicturesList().enqueue(object : Callback<Labels> {
             override fun onFailure(call: Call<Labels>, t: Throwable) {
-                Toast.makeText(context, "Fail  " + t.toString(), Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, "Fail  " + t.toString(), Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<Labels>, response: Response<Labels>) {
