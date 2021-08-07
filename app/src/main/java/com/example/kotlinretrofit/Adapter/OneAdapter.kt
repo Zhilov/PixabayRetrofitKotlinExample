@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinretrofit.Fragments.FragmentDetails
 import com.example.kotlinretrofit.MainActivity
+import com.example.kotlinretrofit.Model.Hits
 import com.example.kotlinretrofit.Model.Labels
 import com.example.kotlinretrofit.R
 import com.squareup.picasso.Picasso
@@ -49,24 +50,24 @@ class OneAdapter(private val context: Context?, private val pictureList: Labels)
         holder.textComments.text = pictureList.hits[position].comments
 
         holder.itemView.setOnClickListener(View.OnClickListener {
-            fragmentJump(pictureList)
+            fragmentJump(pictureList.hits.get(position))
         })
     }
 
-    private fun fragmentJump(mItemSelected: Labels){
-        var fragmentDetails: FragmentDetails = FragmentDetails()
-        var bundle: Bundle = Bundle()
+    private fun fragmentJump(mItemSelected: Hits){
+        var fragmentDetails = FragmentDetails()
+        var bundle = Bundle()
         bundle.putParcelable("item_key", mItemSelected)
         fragmentDetails.arguments = bundle
-        switchContent(R.id.fragment_container_view, FragmentDetails())
+        switchContent(R.id.fragment_container_view, FragmentDetails(), bundle)
     }
 
-    fun switchContent(id: Int, fragment: Fragment) {
+    fun switchContent(id: Int, fragment: Fragment, bundle: Bundle) {
         if (context == null) return
         if (context is MainActivity) {
             val mainActivity = context as MainActivity
             val frag: Fragment = fragment
-            mainActivity.switchContent(id, frag)
+            mainActivity.switchContent(id, frag, bundle)
         }
     }
 

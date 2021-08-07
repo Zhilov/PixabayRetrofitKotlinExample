@@ -34,6 +34,7 @@ class FragmentMain : Fragment() {
     lateinit var adapterTwo: TwoAdapter
     lateinit var dialog: AlertDialog
     lateinit var swtichCompat: SwitchCompat
+    lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,25 +43,12 @@ class FragmentMain : Fragment() {
        var view: View = inflater.inflate(R.layout.fragment_main, container, false)
         swtichCompat = view.findViewById(R.id.customSwitch)
         swtichCompat.visibility = View.GONE
-        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerPictures)
+        recyclerView = view.findViewById(R.id.recyclerPictures)
         mService = Common.retrofitService
         linearLayoutManager = LinearLayoutManager(context)
         gridLayoutManager = GridLayoutManager(context, 2)
         recyclerView.layoutManager = gridLayoutManager
         dialog = SpotsDialog.Builder().setCancelable(true).setContext(context).build()
-        getAllPicturesList()
-
-        swtichCompat.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-            if (swtichCompat.isChecked){
-                recyclerView.layoutManager = linearLayoutManager
-                recyclerView.adapter = adapterOne
-                adapterOne.notifyDataSetChanged()
-            } else {
-                recyclerView.layoutManager = gridLayoutManager
-                recyclerView.adapter = adapterTwo
-                adapterTwo.notifyDataSetChanged()
-            }
-        })
         return view
     }
 
@@ -73,15 +61,30 @@ class FragmentMain : Fragment() {
 
             override fun onResponse(call: Call<Labels>, response: Response<Labels>) {
                 swtichCompat.visibility = View.VISIBLE
-
                 adapterOne = OneAdapter(context!!, response.body() as Labels)
                 adapterTwo = TwoAdapter(context!!, response.body() as Labels)
                 adapterOne.notifyDataSetChanged()
                 adapterTwo.notifyDataSetChanged()
                 recyclerPictures.adapter = adapterTwo
                 dialog.dismiss()
+                swtichCompat.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+                    if (swtichCompat.isChecked){
+                        recyclerView.layoutManager = linearLayoutManager
+                        recyclerView.adapter = adapterOne
+                        adapterOne.notifyDataSetChanged()
+                    } else {
+                        recyclerView.layoutManager = gridLayoutManager
+                        recyclerView.adapter = adapterTwo
+                        adapterTwo.notifyDataSetChanged()
+                    }
+                })
             }
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        getAllPicturesList()
+        swtichCompat.isChecked = false
+    }
 }

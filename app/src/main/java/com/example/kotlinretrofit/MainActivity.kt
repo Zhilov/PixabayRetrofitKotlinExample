@@ -18,8 +18,9 @@
             }
         }
 
-        fun switchContent(id: Int, fragment: Fragment) {
+        fun switchContent(id: Int, fragment: Fragment, bundle: Bundle) {
             val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+            fragment.arguments = bundle
             ft.replace(id, fragment, fragment.toString())
             ft.addToBackStack(null)
             ft.commit()
