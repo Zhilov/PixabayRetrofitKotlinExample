@@ -1,8 +1,10 @@
 package com.example.kotlinretrofit.Fragments
 
-import android.graphics.Bitmap
+import android.app.DownloadManager
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +15,10 @@ import androidx.fragment.app.Fragment
 import com.example.kotlinretrofit.Model.Hits
 import com.example.kotlinretrofit.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
+import java.io.File
+
 
 class FragmentDetails : Fragment() {
 
@@ -60,6 +64,11 @@ class FragmentDetails : Fragment() {
             textLikes.text = hits?.likes
             textViews.text = hits?.views
             textComments.text = hits?.comments
+
+            fab.setOnClickListener(View.OnClickListener {
+                download(hits!!)
+                Snackbar.make(fab, "Downloading...", Snackbar.LENGTH_LONG).show()
+            })
         } else{
             Log.d("TAG", "Fail")
         }
@@ -75,6 +84,38 @@ class FragmentDetails : Fragment() {
 //                }
 //            }
         return view
+    }
+
+    private fun download(hits: Hits){
+        val filename = hits.id + ".jpg"
+        val DIR_NAME = "pixabay"
+        val downloadUrlOfImage = hits.largeImageURL
+        val direct = File(
+            Environment
+                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                .absolutePath + "/" + DIR_NAME + "/"
+        )
+
+
+        if (!direct.exists()) {
+            direct.mkdir()
+            Log.d("TAG", "dir created for first time")
+        }
+
+        val dm = context?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val downloadUri: Uri = Uri.parse(downloadUrlOfImage)
+        val request = DownloadManager.Request(downloadUri)
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+            .setAllowedOverRoaming(false)
+            .setTitle(filename)
+            .setMimeType("image/jpeg")
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationInExternalPublicDir(
+                Environment.DIRECTORY_PICTURES,
+                File.separator + DIR_NAME + File.separator.toString() + filename
+            )
+
+        dm.enqueue(request)
     }
 
     }
