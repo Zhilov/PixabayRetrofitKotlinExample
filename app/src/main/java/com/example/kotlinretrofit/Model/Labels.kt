@@ -7,9 +7,9 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 class Labels(
     @SerializedName("total")
-    var total: Integer? = null,
+    var total: Int? = null,
     @SerializedName("totalHits")
-    var totalHits: Integer? = null,
+    var totalHits: Int? = null,
     @SerializedName("hits")
     var hits: List<Hits> = emptyList(),
     ) : Parcelable

@@ -36,9 +36,9 @@ class OneAdapter(private val context: Context?, private val pictureList: Labels)
     override fun getItemCount() = pictureList.hits.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val listItem = pictureList.hits[position]
-        Picasso.get().load(pictureList.hits.get(position).webformatURL).into(holder.image)
-        Log.d("TAG", (pictureList.hits.get(position).previewURL.toString()))
+        pictureList.hits[position]
+        Picasso.get().load(pictureList.hits[position].webformatURL).into(holder.image)
+        Log.d("TAG", (pictureList.hits[position].previewURL.toString()))
         if(pictureList.hits[position].user?.length!! > 9){
             holder.textUser.text = pictureList.hits[position].user?.substring(0, 9) + "..."
         } else{
@@ -49,23 +49,23 @@ class OneAdapter(private val context: Context?, private val pictureList: Labels)
         holder.textLikes.text = pictureList.hits[position].likes
         holder.textComments.text = pictureList.hits[position].comments
 
-        holder.itemView.setOnClickListener(View.OnClickListener {
-            fragmentJump(pictureList.hits.get(position))
-        })
+        holder.itemView.setOnClickListener {
+            fragmentJump(pictureList.hits[position])
+        }
     }
 
     private fun fragmentJump(mItemSelected: Hits){
-        var fragmentDetails = FragmentDetails()
-        var bundle = Bundle()
+        val fragmentDetails = FragmentDetails()
+        val bundle = Bundle()
         bundle.putParcelable("item_key", mItemSelected)
         fragmentDetails.arguments = bundle
         switchContent(R.id.fragment_container_view, FragmentDetails(), bundle)
     }
 
-    fun switchContent(id: Int, fragment: Fragment, bundle: Bundle) {
+    private fun switchContent(id: Int, fragment: Fragment, bundle: Bundle) {
         if (context == null) return
         if (context is MainActivity) {
-            val mainActivity = context as MainActivity
+            val mainActivity = context
             val frag: Fragment = fragment
             mainActivity.switchContent(id, frag, bundle)
         }

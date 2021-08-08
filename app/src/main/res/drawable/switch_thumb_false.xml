@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item >
+    <item>
         <shape android:shape="oval">
-            <solid android:color="#222"/>
-            <size android:height="@dimen/dimen_switch"
-                android:width="@dimen/dimen_switch"/>
+            <solid android:color="#222" />
+            <size
+                android:width="@dimen/dimen_switch"
+                android:height="@dimen/dimen_switch" />
 
         </shape>
     </item>
 
 
-
-    <item android:drawable="@drawable/ic_baseline_dashboard_24"
+    <item
         android:bottom="12dp"
-        android:top="12dp"
+        android:drawable="@drawable/ic_baseline_dashboard_24"
         android:left="12dp"
         android:right="12dp"
-        />
-
+        android:top="12dp" />
 
 
 </layer-list>

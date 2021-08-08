@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:padding="10dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/border"
-    android:layout_height="wrap_content">
+    android:padding="10dp">
 
     <ImageView
         android:id="@+id/image_one"
@@ -20,9 +20,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/biryani"
+        android:maxLength="13"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:maxLength="13"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_one"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,10 +32,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:drawableLeft="@drawable/ic_baseline_favorite_24"
         android:fontFamily="@font/biryani"
         android:textColor="@color/white"
         android:textSize="15sp"
+        app:drawableLeftCompat="@drawable/ic_baseline_favorite_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_one"
         app:layout_constraintTop_toBottomOf="@+id/text_user_one" />
@@ -45,10 +45,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:drawableLeft="@drawable/ic_baseline_comment_24"
         android:fontFamily="@font/biryani"
         android:textColor="@color/white"
         android:textSize="15sp"
+        app:drawableLeftCompat="@drawable/ic_baseline_comment_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_one"
         app:layout_constraintTop_toBottomOf="@+id/text_likes_one" />
