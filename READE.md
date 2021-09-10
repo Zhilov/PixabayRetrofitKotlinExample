@@ -1,0 +1,1 @@
+This app was created for downloading beautiful wallpapers
