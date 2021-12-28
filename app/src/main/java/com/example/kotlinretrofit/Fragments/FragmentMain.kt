@@ -2,12 +2,15 @@ package com.example.kotlinretrofit.Fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.Adapter
 import android.widget.EditText
+import androidx.annotation.NonNull
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -20,10 +23,22 @@ import com.example.kotlinretrofit.Common.Common
 import com.example.kotlinretrofit.Interface.RetrofitServices
 import com.example.kotlinretrofit.Model.Labels
 import com.example.kotlinretrofit.R
+import com.jakewharton.rxbinding4.widget.textChanges
 import dmax.dialog.SpotsDialog
+import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.functions.BiFunction
+import io.reactivex.rxjava3.functions.Consumer
+import io.reactivex.rxjava3.observers.DisposableSingleObserver
+import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.TimeUnit
 
 
 class FragmentMain : Fragment() {
@@ -55,66 +70,78 @@ class FragmentMain : Fragment() {
         dialog = SpotsDialog.Builder().setCancelable(true).setContext(context).build()
         linearLayoutManager = LinearLayoutManager(context)
         gridLayoutManager = GridLayoutManager(context, 2)
+
+        getData("")
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(
+            object : DisposableSingleObserver<Labels?>() {
+                override fun onSuccess(t: Labels?) {
+                    labels = t!!
+                    toolbar.visibility = View.VISIBLE
+                    dialog.dismiss()
+                    adapterOne = OneAdapter(requireContext(), labels)
+                    adapterTwo = TwoAdapter(requireContext(), labels)
+                    if (switchCompat.isChecked) {
+                        setOneAdapter()
+                    } else {
+                        setTwoAdapter()
+                    }
+                    dispose()
+                }
+
+                override fun onError(e: Throwable?) {
+                    Log.d("Error", e!!.localizedMessage.toString())
+                }
+            })
+
         switchCompat.setOnCheckedChangeListener { buttonView, isChecked ->
             if (switchCompat.isChecked) {
-                setOneAdapter(labels)
+                setOneAdapter()
             } else {
-                setTwoAdapter(labels)
+                setTwoAdapter()
             }
         }
-        editText.setOnKeyListener(object : View.OnKeyListener{
-            override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
-                if (keyCode == EditorInfo.IME_ACTION_SEARCH ||
-                    keyCode == EditorInfo.IME_ACTION_DONE ||
-                    event?.action == KeyEvent.ACTION_DOWN &&
-                    event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    getAllPicturesList(editText.text.toString())
-                    return true
-                } else{
-                    return false
-                }
+
+        editText.textChanges()
+            .debounce(1, TimeUnit.SECONDS)
+            .subscribeOn(Schedulers.computation())
+            .subscribe{
+                getData(editText.text.toString())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(
+                        object : DisposableSingleObserver<Labels?>() {
+                            override fun onSuccess(t: Labels?) {
+                                labels = t!!
+                                recyclerView.adapter!!.notifyDataSetChanged()
+                            }
+
+                            override fun onError(e: Throwable?) {
+                                Log.d("Error", "key " + e!!.localizedMessage.toString())
+                            }
+                        })
             }
-        })
         return view
     }
 
-    private fun setOneAdapter(labels: Labels) {
-        adapterOne = OneAdapter(context, labels)
+    private fun getData(search: String): Single<Labels>{
+        return Single.create{
+            sub ->
+            sub.onSuccess(mService.getPicturesList(search).execute().body())
+        }
+    }
+
+    private fun setOneAdapter() {
         recyclerView.layoutManager = linearLayoutManager
+//        recyclerView.swapAdapter(adapterOne, false)
         recyclerView.adapter = adapterOne
-        adapterOne.notifyDataSetChanged()
     }
 
-    private fun setTwoAdapter(labels: Labels) {
-        adapterTwo = TwoAdapter(context, labels)
+    private fun setTwoAdapter() {
         recyclerView.layoutManager = gridLayoutManager
+//        recyclerView.swapAdapter(adapterTwo, false)
         recyclerView.adapter = adapterTwo
-        adapterTwo.notifyDataSetChanged()
     }
-
-    private fun getAllPicturesList(search: String) {
-        dialog.show()
-        mService.getPicturesList(search).enqueue(object : Callback<Labels> {
-            override fun onResponse(call: Call<Labels>, response: Response<Labels>) {
-                labels = response.body() as Labels
-                toolbar.visibility = View.VISIBLE
-                        if (switchCompat.isChecked) {
-                            setOneAdapter(labels)
-                        } else {
-                            setTwoAdapter(labels)
-                        }
-                dialog.dismiss()
-            }
-
-            override fun onFailure(call: Call<Labels>, t: Throwable) {
-            }
-        })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        getAllPicturesList(editText.text.toString())
-    }
-
 
 }

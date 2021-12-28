@@ -17,7 +17,7 @@ import com.example.kotlinretrofit.Model.Labels
 import com.example.kotlinretrofit.R
 import com.squareup.picasso.Picasso
 
-class TwoAdapter(private val context: Context?, private val pictureList: Labels):RecyclerView.Adapter<TwoAdapter.MyViewHolder>() {
+class TwoAdapter(private val context: Context, private val pictureList: Labels):RecyclerView.Adapter<TwoAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val image: ImageView = itemView.findViewById(R.id.image_two)
@@ -30,7 +30,7 @@ class TwoAdapter(private val context: Context?, private val pictureList: Labels)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(context).inflate(R.layout.item_layout_two, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_layout_two, parent, false)
         return MyViewHolder(itemView)
     }
 
@@ -40,7 +40,7 @@ class TwoAdapter(private val context: Context?, private val pictureList: Labels)
        val listItem = pictureList.hits[position]
         holder.bind(listItem)
         Picasso.get().load(pictureList.hits[position].webformatURL).into(holder.image)
-        Log.d("TAG", (pictureList.hits[position].previewURL.toString()))
+//        Log.d("TAG", (pictureList.hits[position].previewURL.toString()))
 
         holder.itemView.setOnClickListener {
             fragmentJump(pictureList.hits[position])

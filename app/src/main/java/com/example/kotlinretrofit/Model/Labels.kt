@@ -2,6 +2,8 @@ package com.example.kotlinretrofit.Model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import io.reactivex.rxjava3.annotations.NonNull
+import io.reactivex.rxjava3.functions.Consumer
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -12,7 +14,11 @@ class Labels(
     var totalHits: Int? = null,
     @SerializedName("hits")
     var hits: List<Hits> = emptyList(),
-    ) : Parcelable
+    ) : Parcelable, @NonNull Consumer<Labels> {
+    override fun accept(t: Labels?) {
+        TODO("Not yet implemented")
+    }
+}
 
 @Parcelize
 data class Hits(
