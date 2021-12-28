@@ -13,7 +13,7 @@ class Labels(
     @SerializedName("totalHits")
     var totalHits: Int? = null,
     @SerializedName("hits")
-    var hits: List<Hits> = emptyList(),
+    var hits: ArrayList<Hits> = ArrayList<Hits>(),
     ) : Parcelable, @NonNull Consumer<Labels> {
     override fun accept(t: Labels?) {
         TODO("Not yet implemented")

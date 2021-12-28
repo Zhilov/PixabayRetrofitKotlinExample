@@ -64,4 +64,10 @@ class TwoAdapter(private val context: Context, private val pictureList: Labels):
         }
     }
 
+    fun updateList(newlist: ArrayList<Hits>) {
+        pictureList.hits.clear()
+        pictureList.hits.addAll(newlist)
+        this.notifyDataSetChanged()
+    }
+
 }
