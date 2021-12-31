@@ -1,7 +1,8 @@
 package com.example.kotlinretrofit.Fragments
 
 import android.app.AlertDialog
-import android.opengl.Visibility
+import android.app.Service
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,18 +19,27 @@ import com.example.kotlinretrofit.Adapter.OneAdapter
 import com.example.kotlinretrofit.Adapter.TwoAdapter
 import com.example.kotlinretrofit.Common.Common
 import com.example.kotlinretrofit.Interface.RetrofitServices
-import com.example.kotlinretrofit.Model.Hits
 import com.example.kotlinretrofit.Model.Labels
 import com.example.kotlinretrofit.R
 import com.jakewharton.rxbinding4.widget.textChanges
 import dmax.dialog.SpotsDialog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_main.*
 import java.util.concurrent.TimeUnit
+import android.net.NetworkInfo
+
+import android.net.ConnectivityManager
+import android.net.wifi.WifiInfo
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.ContextCompat.getSystemService
+import com.example.kotlinretrofit.Model.Hits
+import com.google.android.material.snackbar.Snackbar
+import io.reactivex.rxjava3.internal.operators.observable.ObservableCreate
 
 
 class FragmentMain : Fragment() {
@@ -76,7 +86,9 @@ class FragmentMain : Fragment() {
                 } else {
                     setTwoAdapter()
                 }
-            }, {}, {
+            }, {
+               Log.d("Tag", "Error:" + it.localizedMessage)
+            }, {
                 Log.d("Tag", "Complete")
             })
 
@@ -115,10 +127,10 @@ class FragmentMain : Fragment() {
     }
 
     private fun getData(search: String): Observable<Labels>{
-        return Observable.create { sub ->
-            sub.onNext(mService.getPicturesList(search).execute().body())
-            sub.onComplete()
-        }
+                return Observable.create { sub ->
+                    sub.onNext(mService.getPicturesList(search).execute().body())
+                    sub.onComplete()
+                }
     }
 
     private fun setOneAdapter() {

@@ -105,7 +105,6 @@ class FragmentDetails : Fragment() {
                 .absolutePath + "/" + dirname + "/"
         )
 
-
         if (!direct.exists()) {
             direct.mkdir()
             Log.d("TAG", "dir created for first time")
