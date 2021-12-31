@@ -50,23 +50,13 @@ class FragmentDetails : Fragment() {
         imageBack = view.findViewById(R.id.image_back)
 
         textLikes.setCompoundDrawablesWithIntrinsicBounds(
-            R.drawable.ic_baseline_favorite_24,
-            0,
-            0,
-            0
-        )
+            R.drawable.ic_baseline_favorite_24, 0, 0, 0)
+
         textComments.setCompoundDrawablesWithIntrinsicBounds(
-            R.drawable.ic_baseline_comment_24,
-            0,
-            0,
-            0
-        )
+            R.drawable.ic_baseline_comment_24, 0, 0, 0)
+
         textViews.setCompoundDrawablesWithIntrinsicBounds(
-            R.drawable.ic_baseline_remove_red_eye_24,
-            0,
-            0,
-            0
-        )
+            R.drawable.ic_baseline_remove_red_eye_24, 0, 0, 0)
 
         val bundle: Bundle? = arguments
         if (bundle != null) {
