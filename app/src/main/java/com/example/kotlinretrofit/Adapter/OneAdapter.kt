@@ -21,6 +21,8 @@ import java.lang.ref.WeakReference
 
 class OneAdapter(private val context: Context, private val pictureList: Labels):RecyclerView.Adapter<OneAdapter.MyViewHolder>() {
 
+    var cPosition: Int = 0
+
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val image: ImageView = itemView.findViewById(R.id.image_one)
         val textUser: TextView = itemView.findViewById(R.id.text_user_one)
@@ -52,6 +54,8 @@ class OneAdapter(private val context: Context, private val pictureList: Labels):
         holder.itemView.setOnClickListener {
             fragmentJump(pictureList.hits[position])
         }
+
+        cPosition = holder.layoutPosition
     }
 
     private fun fragmentJump(mItemSelected: Hits){
@@ -69,6 +73,10 @@ class OneAdapter(private val context: Context, private val pictureList: Labels):
             val frag: Fragment = fragment
             mainActivity.switchContent(id, frag, bundle)
         }
+    }
+
+    fun getCurrentPosition(): Int{
+        return cPosition
     }
 
     fun updateList(newlist: ArrayList<Hits>) {

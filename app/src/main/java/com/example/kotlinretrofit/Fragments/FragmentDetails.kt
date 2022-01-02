@@ -76,7 +76,7 @@ class FragmentDetails : Fragment() {
                 Snackbar.make(imageSave, "Downloading...", Snackbar.LENGTH_LONG).show()
             }
         } else {
-            Log.d("TAG", "Fail")
+            Snackbar.make(view, "Something gone wrong...", Snackbar.LENGTH_SHORT)
         }
 
         imageBack.setOnClickListener {
