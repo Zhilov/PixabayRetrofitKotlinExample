@@ -2,7 +2,6 @@ package com.example.kotlinretrofit.Adapter
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +15,9 @@ import com.example.kotlinretrofit.Model.Hits
 import com.example.kotlinretrofit.Model.Labels
 import com.example.kotlinretrofit.R
 import com.squareup.picasso.Picasso
-import java.lang.ref.WeakReference
 
 
-class OneAdapter(private val context: Context, private val pictureList: Labels):RecyclerView.Adapter<OneAdapter.MyViewHolder>() {
+class RecyclerViewAdapter(private val context: Context, private val pictureList: Labels):RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
     var cPosition: Int = 0
 
@@ -32,7 +30,7 @@ class OneAdapter(private val context: Context, private val pictureList: Labels):
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_layout_one, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_item, parent, false)
         return MyViewHolder(itemView)
     }
 
@@ -40,9 +38,8 @@ class OneAdapter(private val context: Context, private val pictureList: Labels):
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         Picasso.get().load(pictureList.hits[position].webformatURL).into(holder.image)
-//        Log.d("TAG", (pictureList.hits[position].previewURL.toString()))
-        if(pictureList.hits[position].user?.length!! > 9){
-            holder.textUser.text = pictureList.hits[position].user?.substring(0, 9) + "..."
+        if(pictureList.hits[position].user?.length!! > 15){
+            holder.textUser.text = pictureList.hits[position].user?.substring(0, 15) + "..."
         } else{
             holder.textUser.text = pictureList.hits[position].user
         }
