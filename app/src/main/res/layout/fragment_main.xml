@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.FragmentMain">
+    tools:context=".fragments.FragmentMain">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -16,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <EditText
                 android:id="@+id/edit_search"
                 android:layout_width="match_parent"
@@ -24,6 +22,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:autofillHints="name"
                 android:fontFamily="@font/biryani"
                 android:hint="@string/search"
                 android:inputType="text"
@@ -35,19 +34,19 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
-     <TextView
-         android:id="@+id/textEmptyList"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_centerInParent="true"
-         android:layout_marginLeft="10dp"
-         android:layout_marginRight="10dp"
-         android:textColor="@color/white"
-         android:textSize="25sp"
-         android:visibility="invisible"
-         android:fontFamily="@font/biryani"
-         android:text="Nothing to show"
-         android:textAlignment="center"/>
+    <TextView
+        android:id="@+id/textEmptyList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:fontFamily="@font/biryani"
+        android:text="@string/nothing_to_show"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:visibility="invisible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerPictures"

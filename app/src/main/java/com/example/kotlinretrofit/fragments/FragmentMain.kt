@@ -1,4 +1,4 @@
-package com.example.kotlinretrofit.Fragments
+package com.example.kotlinretrofit.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kotlinretrofit.Adapter.RecyclerViewAdapter
-import com.example.kotlinretrofit.Common.Common
-import com.example.kotlinretrofit.Interface.RetrofitServices
-import com.example.kotlinretrofit.Model.Labels
+import com.example.kotlinretrofit.adapter.RecyclerViewAdapter
+import com.example.kotlinretrofit.common.Common
+import com.example.kotlinretrofit.retrofitInterface.RetrofitServices
+import com.example.kotlinretrofit.model.Labels
 import com.example.kotlinretrofit.R
 import com.jakewharton.rxbinding4.widget.textChanges
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers

@@ -1,7 +1,7 @@
-package com.example.kotlinretrofit.Common
+package com.example.kotlinretrofit.common
 
-import com.example.kotlinretrofit.Interface.RetrofitServices
-import com.example.kotlinretrofit.Retrofit.RetrofitClient
+import com.example.kotlinretrofit.retrofitInterface.RetrofitServices
+import com.example.kotlinretrofit.retrofit.RetrofitClient
 
 object Common {
     private const val BASE_URL = "https://pixabay.com/"

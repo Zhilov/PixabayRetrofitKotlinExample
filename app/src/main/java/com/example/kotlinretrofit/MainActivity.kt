@@ -9,7 +9,7 @@
     import androidx.fragment.app.FragmentTransaction
     import androidx.fragment.app.add
     import androidx.fragment.app.commit
-    import com.example.kotlinretrofit.Fragments.FragmentMain
+    import com.example.kotlinretrofit.fragments.FragmentMain
     import com.google.android.material.snackbar.Snackbar
     import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
     import io.reactivex.rxjava3.core.Observable
@@ -62,16 +62,14 @@
                 sub ->
                 if (isOnline()){
                     sub.onNext(true)
-                    Log.d("Tag", "True online")
                     sub.onComplete()
                 } else{
                     sub.onNext(false)
-                    Log.d("Tag", "False online ")
                 }
             }
         }
 
-        fun isOnline(): Boolean {
+        private fun isOnline(): Boolean {
             val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
                 return cm.activeNetworkInfo?.isConnectedOrConnecting != null
 

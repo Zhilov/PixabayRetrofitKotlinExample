@@ -1,4 +1,4 @@
-package com.example.kotlinretrofit.Adapter
+package com.example.kotlinretrofit.adapter
 
 import android.content.Context
 import android.os.Bundle
@@ -9,23 +9,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kotlinretrofit.Fragments.FragmentDetails
+import com.example.kotlinretrofit.fragments.FragmentDetails
 import com.example.kotlinretrofit.MainActivity
-import com.example.kotlinretrofit.Model.Hits
-import com.example.kotlinretrofit.Model.Labels
+import com.example.kotlinretrofit.model.Hits
+import com.example.kotlinretrofit.model.Labels
 import com.example.kotlinretrofit.R
 import com.squareup.picasso.Picasso
 
 
 class RecyclerViewAdapter(private val context: Context, private val pictureList: Labels):RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
-    var cPosition: Int = 0
-
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val image: ImageView = itemView.findViewById(R.id.image_one)
         val textUser: TextView = itemView.findViewById(R.id.text_user_one)
         val textLikes: TextView = itemView.findViewById(R.id.text_likes_one)
-        val textComments: TextView = itemView.findViewById(R.id.text_comments_one)
 
     }
 
@@ -44,15 +41,11 @@ class RecyclerViewAdapter(private val context: Context, private val pictureList:
             holder.textUser.text = pictureList.hits[position].user
         }
         holder.textLikes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_favorite_24, 0, 0, 0)
-        holder.textComments.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_comment_24, 0, 0, 0)
         holder.textLikes.text = pictureList.hits[position].likes
-        holder.textComments.text = pictureList.hits[position].comments
 
         holder.itemView.setOnClickListener {
             fragmentJump(pictureList.hits[position])
         }
-
-        cPosition = holder.layoutPosition
     }
 
     private fun fragmentJump(mItemSelected: Hits){
@@ -70,10 +63,6 @@ class RecyclerViewAdapter(private val context: Context, private val pictureList:
             val frag: Fragment = fragment
             mainActivity.switchContent(id, frag, bundle)
         }
-    }
-
-    fun getCurrentPosition(): Int{
-        return cPosition
     }
 
     fun updateList(newlist: ArrayList<Hits>) {

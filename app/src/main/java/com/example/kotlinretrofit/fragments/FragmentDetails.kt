@@ -1,4 +1,4 @@
-package com.example.kotlinretrofit.Fragments
+package com.example.kotlinretrofit.fragments
 
 import android.app.DownloadManager
 import android.content.Context
@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.kotlinretrofit.Model.Hits
+import com.example.kotlinretrofit.model.Hits
 import com.example.kotlinretrofit.R
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso

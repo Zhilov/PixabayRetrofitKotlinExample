@@ -13,10 +13,10 @@
 
     <ProgressBar
         android:id="@+id/progressbar"
-        android:indeterminateTint="#ccc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:indeterminateTint="#ccc" />
 
 
     <TextView
@@ -27,7 +27,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:fontFamily="@font/biryani"
-        android:text="No internet connection"
+        android:text="@string/no_internet_connection"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="25sp" />
@@ -42,6 +42,6 @@
         android:backgroundTint="@color/cardview_dark_background"
         android:scaleType="center"
         android:src="@drawable/ic_baseline_autorenew_24"
-        app:maxImageSize="40dp"
-        app:backgroundTint="@color/black"/>
+        app:backgroundTint="@color/black"
+        app:maxImageSize="40dp" />
 </RelativeLayout>

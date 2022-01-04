@@ -1,4 +1,4 @@
-package com.example.kotlinretrofit.Model
+package com.example.kotlinretrofit.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
